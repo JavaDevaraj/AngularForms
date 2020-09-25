@@ -1,0 +1,65 @@
+<div class="container-fluid">
+	<h2>User Registration Form</h2>
+	kumar--{{userForm.invalid }}
+	<form [formGroup]="userForm">
+	
+		<div class="form-group">
+			<label [class.text-danger]="f.userName.invalid && f.userName.touched">UserName</label> 
+			<input formControlName="userName" type="text" class="form-control">
+			<small class="text-danger" *ngIf="f.userName.invalid && f.userName.touched">UserName is required</small>
+		</div>
+		
+		<div class="form-group">
+			<label [class.text-danger]="f.emailId.errors && f.emailId.touched">Email</label>
+			<input formControlName="emailId" type="text" class="form-control">
+			<div *ngIf="f.emailId.touched && f.emailId.errors">
+			<small class="text-danger" *ngIf="f.emailId.errors.required">Email is required</small>
+			<small class="text-danger" *ngIf="!f.emailId.errors.required && f.emailId.errors.email">Enter valid email id</small>
+			</div>
+		</div>
+		<div class="form-group">
+			<label [class.text-danger]="f.password.errors && f.password.touched">Password</label> 
+			<input formControlName="password" type="password" class="form-control">
+			<div *ngIf="f.password.touched && f.password.errors">
+			<small class="text-danger" *ngIf="f.password.errors?.required">Password is required</small>
+			<small class="text-danger" *ngIf="!f.password.errors?.required && f.password.errors?.minlength">Password should have minimum 6 alphaNumeric</small>
+			<small class="text-danger" *ngIf="!f.password.errors?.required && f.password.errors?.pattern">Enter valid Password</small>
+			<small class="text-danger" *ngIf="!f.password.errors?.required && f.password.errors?.maxlength">Password should have maximum 10 alphaNumeric</small>
+			</div>
+		</div>
+		<div class="form-group">
+			<label [class.text-danger]="f.confirmPassword.touched && (f.confirmPassword.errors ||!(f.confirmPassword.value ==f.password.value))">Confirm Password</label> 
+			<input formControlName="confirmPassword" type="password" class="form-control">
+			<div *ngIf="f.confirmPassword.touched && f.confirmPassword.errors">
+			<small class="text-danger" *ngIf="f.confirmPassword.errors?.required">Password is required</small>
+			<small class="text-danger" *ngIf="!f.confirmPassword.errors?.required && f.confirmPassword.errors?.minlength">Password should have minimum 6 alphaNumeric</small>
+			<small class="text-danger" *ngIf="!f.confirmPassword.errors?.required && f.confirmPassword.errors?.pattern">Enter valid Password</small>
+			<small class="text-danger" *ngIf="!f.confirmPassword.errors?.required && f.confirmPassword.errors?.maxlength">Password should have maximum 10 alphaNumeric</small>
+			</div>
+			<small class="text-danger" *ngIf="isEmpty(f.confirmPassword.errors) && !(f.confirmPassword.value ==f.password.value)">Please enter same password</small>
+		</div>
+		<div formGroupName="address">
+			<div class="form-group">
+				<label [class.text-danger]="addr.city.touched && addr.city.errors">City</label> 
+				<input formControlName="city" type="text" class="form-control">
+				<small class="text-danger" *ngIf="addr.city.touched && addr.city.errors?.required">Please enter city</small>
+			</div>
+			<div class="form-group">
+				<label [class.text-danger]="addr.state.touched && addr.state.errors">State</label> 
+				<input formControlName="state" type="text" class="form-control">
+				<small class="text-danger" *ngIf="addr.state.touched && addr.state.errors?.required">Please enter state</small>
+			</div>
+			<div class="form-group">
+				<label [class.text-danger]="addr.postalCode.touched && addr.postalCode.errors">Postal Code</label> 
+				<input formControlName="postalCode" type="text" class="form-control">
+				<div *ngIf="addr.postalCode.touched && addr.postalCode.errors ">
+				<small class="text-danger" *ngIf="addr.postalCode.errors?.required">Please enter Postal code</small>
+				<small class="text-danger" *ngIf="!addr.postalCode.errors?.required && addr.postalCode.errors?.pattern">Postal code should contain only digits</small>
+				</div>
+				
+			</div>
+		</div>
+		<button [disabled]="userForm.invalid" class="btn btn-primary" type="submit">Register</button>
+	</form>
+
+</div>
